@@ -1,0 +1,44 @@
+version: "3"
+services:
+  nodejs_express:
+    build:
+      context: .
+    container_name: cube_nodejs_express_express
+    environment:
+      # tell the app that it is running in docker compose
+      - CUBE_DOCKER_COMPOSE=true
+
+      - OTEL_SERVICE_NAME=cube_sample_nodejs_express
+      - OTEL_EXPORTER_OTLP_COMPRESSION=gzip
+      - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
+      - NODE_OPTIONS=--require @opentelemetry/auto-instrumentations-node/register
+
+      # print traces on console
+      - OTEL_TRACES_EXPORTER=console
+      # send traces to CubeAPM
+      # - OTEL_TRACES_EXPORTER=otlp
+      # - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4317
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+      - redis
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    container_name: cube_nodejs_express_mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=test
+    volumes:
+      - cube_nodejs_express_mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis:alpine3.18
+    container_name: cube_nodejs_express_redis
+
+volumes:
+  cube_nodejs_express_mysql:

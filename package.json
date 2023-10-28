@@ -1,0 +1,19 @@
+{
+  "name": "nodejs_express",
+  "version": "1.0.0",
+  "description": "Sample app to demonstrate how to instrument NodeJS ExpressJS app with OpenTelemetry.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "CubeAPM",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@opentelemetry/auto-instrumentations-node": "^0.38.0",
+    "axios": "^1.6.0",
+    "express": "^4.18.2",
+    "mysql2": "^3.6.2",
+    "redis": "^4.6.10"
+  }
+}

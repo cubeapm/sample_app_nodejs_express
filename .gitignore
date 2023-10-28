@@ -1,0 +1,3 @@
+# when updating this file, also consider updating .dockerignore
+/node_modules/
+.DS_Store
