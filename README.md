@@ -15,16 +15,16 @@ docker compose up --build
 
 ExpressJS app will now be available at `http://localhost:8000`.
 
-The app has various API endpoints to demonstrate OpenTelemetry integrations with Redis, MySQL, etc. Check out [app.js](app.js) for the list of API endpoints. Hitting an API endpoint will generate the corresponding traces. Traces are printed to console (where docker compose is running) by default. If you want to send traces to a backend tool, change `OTEL_TRACES_EXPORTER` from `console` to `otlp` and uncomment the `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` line in [docker-compose.yml](docker-compose.yml).
+The app has various API endpoints to demonstrate OpenTelemetry integrations with Redis, MySQL, etc. Check out [app.js](app.js) for the list of API endpoints. Hitting an API endpoint will generate the corresponding traces. Traces are printed to console (where docker compose is running) by default. If you want to send traces to a backend tool, comment out the `OTEL_LOG_LEVEL` line and uncomment the `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` line in [docker-compose.yml](docker-compose.yml).
 
 ## Running without Docker
 
 The app can be run with the following command
 
 ```
-OTEL_TRACES_EXPORTER=console \
+OTEL_LOG_LEVEL=debug \
 OTEL_SERVICE_NAME=cube_sample_nodejs_express \
-NODE_OPTIONS="--require @opentelemetry/auto-instrumentations-node/register" \
+NODE_OPTIONS="--require ./tracing.js" \
 node app.js
 ```
 

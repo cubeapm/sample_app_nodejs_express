@@ -11,12 +11,11 @@ services:
       - OTEL_SERVICE_NAME=cube_sample_nodejs_express
       - OTEL_EXPORTER_OTLP_COMPRESSION=gzip
       - OTEL_EXPORTER_OTLP_TRACES_PROTOCOL=grpc
-      - NODE_OPTIONS=--require @opentelemetry/auto-instrumentations-node/register
+      - NODE_OPTIONS=--require ./tracing.js
 
       # print traces on console
-      - OTEL_TRACES_EXPORTER=console
+      - OTEL_LOG_LEVEL=debug
       # send traces to CubeAPM
-      # - OTEL_TRACES_EXPORTER=otlp
       # - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4317
     ports:
       - "8000:8000"
