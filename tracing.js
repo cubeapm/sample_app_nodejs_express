@@ -7,7 +7,7 @@ const {
 } = require("@opentelemetry/auto-instrumentations-node");
 const {
   OTLPTraceExporter,
-} = require("@opentelemetry/exporter-trace-otlp-grpc");
+} = require("@opentelemetry/exporter-trace-otlp-proto");
 
 if (process.env.OTEL_LOG_LEVEL === "debug") {
   diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.INFO);
