@@ -10,10 +10,10 @@
   "author": "CubeAPM",
   "license": "Apache-2.0",
   "dependencies": {
-    "@opentelemetry/auto-instrumentations-node": "^0.44.0",
-    "axios": "^1.6.8",
-    "express": "^4.19.2",
-    "mysql2": "^3.9.5",
-    "redis": "^4.6.13"
+    "@opentelemetry/auto-instrumentations-node": "^0.54.0",
+    "axios": "^1.7.9",
+    "express": "^4.21.2",
+    "mysql2": "^3.11.5",
+    "redis": "^4.7.0"
   }
 }
