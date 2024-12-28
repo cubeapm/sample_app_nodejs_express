@@ -1,0 +1,1250 @@
+ac_exclude: []
+ac_include: []
+ac_load_timeout: 30000
+ad_config_poll_interval: 10
+additional_checksd: /opt/datadog-agent/etc/checks.d
+additional_endpoints: {}
+admission_controller:
+  add_aks_selectors: false
+  agent_sidecar:
+    cluster_agent:
+      enabled: "true"
+    enabled: false
+    endpoint: /agentsidecar
+    image_name: agent
+    image_tag: latest
+    profiles: '[]'
+    provider: ""
+    selectors: '[]'
+  auto_instrumentation:
+    enabled: true
+    endpoint: /injectlib
+    inject_auto_detected_libraries: false
+    patcher:
+      enabled: false
+      fallback_to_file_provider: false
+      file_provider_path: /etc/datadog-agent/patch/auto-instru.json
+  certificate:
+    expiration_threshold: 720
+    secret_name: webhook-certificate
+    validity_bound: 8760
+  container_registry: gcr.io/datadoghq
+  cws_instrumentation:
+    command_endpoint: /inject-command-cws
+    enabled: false
+    exclude: []
+    image_name: cws-instrumentation
+    image_tag: latest
+    include: []
+    mode: remote_copy
+    mutate_unlabelled: false
+    pod_endpoint: /inject-pod-cws
+    remote_copy:
+      directory: /tmp
+      mount_volume: false
+  enabled: false
+  failure_policy: Ignore
+  inject_config:
+    dogstatsd_socket: unix:///var/run/datadog/dsd.socket
+    enabled: true
+    endpoint: /injectconfig
+    local_service_name: datadog
+    mode: hostip
+    socket_path: /var/run/datadog
+    trace_agent_socket: unix:///var/run/datadog/apm.socket
+    type_socket_volumes: false
+  inject_tags:
+    enabled: true
+    endpoint: /injecttags
+    pod_owners_cache_validity: 10
+  mutate_unlabelled: false
+  mutation:
+    enabled: true
+  namespace_selector_fallback: false
+  port: 8000
+  reinvocation_policy: IfNeeded
+  service_name: datadog-admission-controller
+  timeout_seconds: 10
+  validation:
+    enabled: true
+  webhook_name: datadog-webhook
+agent_ipc:
+  config_refresh_interval: 0
+  host: localhost
+  port: 0
+agent_telemetry:
+  batch_max_concurrent_send: 0
+  batch_max_content_size: 5000000
+  batch_max_size: 1000
+  batch_wait: 5
+  compression_level: 6
+  connection_reset_interval: 0
+  enabled: true
+  input_chan_size: 100
+  logs_no_ssl: false
+  sender_backoff_base: 1
+  sender_backoff_factor: 2
+  sender_backoff_max: 120
+  sender_recovery_interval: 2
+  sender_recovery_reset: false
+  use_compression: true
+  use_v2_api: true
+aggregator_buffer_size: 100
+aggregator_flush_metrics_and_serialize_in_parallel_buffer_size: 4000
+aggregator_flush_metrics_and_serialize_in_parallel_chan_size: 200
+aggregator_stop_timeout: 2
+aggregator_use_tags_store: true
+allow_arbitrary_tags: false
+allow_python_path_heuristics_failure: false
+api_key: '***************************f784b'
+apm_config:
+  apm_non_local_traffic: true
+  compute_stats_by_span_kind: true
+  debug:
+    port: 5012
+  enabled: true
+  instrumentation:
+    disabled_namespaces: []
+    enabled: false
+    enabled_namespaces: []
+    injector_image_tag: "0"
+    lib_versions: {}
+    version: v2
+  peer_service_aggregation: true
+  peer_tags_aggregation: true
+  receiver_enabled: true
+  receiver_port: 8126
+  remote_tagger: true
+  telemetry:
+    enabled: true
+  windows_pipe_buffer_size: 1000000
+  windows_pipe_security_descriptor: D:AI(A;;GA;;;WD)
+app_key: ""
+auth_token_file_path: ""
+auto_exit:
+  noprocess:
+    enabled: false
+    excluded_processes: []
+  validation_period: 60
+autoconf_config_files_poll: false
+autoconf_config_files_poll_interval: 60
+autoconf_template_dir: /datadog/check_configs
+autoconf_template_url_timeout: 5
+autoconfig_exclude_features: []
+autoconfig_from_environment: true
+autoconfig_include_features: []
+autoscaling:
+  failover:
+    enabled: false
+  workload:
+    enabled: false
+azure_hostname_style: os
+basic_telemetry_add_container_tags: false
+bosh_id: ""
+c_core_dump: false
+c_stacktrace_collection: false
+capture_lambda_payload: false
+capture_lambda_payload_max_depth: 10
+cf_os_hostname_aliasing: false
+check_cancel_timeout: 500ms
+check_runners: 4
+check_sampler_bucket_commits_count_expiry: 2
+check_sampler_context_metrics: false
+check_sampler_expire_metrics: true
+check_sampler_stateful_metric_expiration_time: 25h0m0s
+checks_tag_cardinality: low
+clc_runner_enabled: false
+clc_runner_host: ""
+clc_runner_id: ""
+clc_runner_port: 5005
+clc_runner_remote_tagger_enabled: false
+clc_runner_server_readheader_timeout: 10
+clc_runner_server_write_timeout: 15
+cloud_foundry: false
+cloud_foundry_bbs:
+  ca_file: ""
+  cert_file: ""
+  env_exclude: []
+  env_include: []
+  key_file: ""
+  poll_interval: 15
+  url: https://bbs.service.cf.internal:8889
+cloud_foundry_buildpack: false
+cloud_foundry_cc:
+  apps_batch_size: 5000
+  client_id: ""
+  client_secret: ""
+  poll_interval: 60
+  skip_ssl_validation: false
+  url: https://cloud-controller-ng.service.cf.internal:9024
+cloud_foundry_container_tagger:
+  retry_count: 10
+  retry_interval: 10
+  shell_path: /bin/sh
+cloud_foundry_garden:
+  listen_address: /var/vcap/data/garden/garden.sock
+  listen_network: unix
+cloud_provider_metadata:
+- aws
+- gcp
+- azure
+- alibaba
+- oracle
+- ibm
+cluster_agent:
+  allow_legacy_tls: false
+  auth_token: "********"
+  client_reconnect_period_seconds: 1200
+  cluster_tagger:
+    grpc_max_message_size: 4194304
+  cmd_port: 5005
+  collect_kubernetes_tags: false
+  enabled: false
+  isolation_segments_tags: false
+  kube_metadata_collection:
+    enabled: false
+    resource_annotations_exclude: []
+    resources: []
+  kubernetes_resources_collection:
+    deployment_annotations_exclude:
+    - ^kubectl\.kubernetes\.io\/last-applied-configuration$
+    - ^ad\.datadoghq\.com\/([[:alnum:]]+\.)?(checks|check_names|init_configs|instances)$
+    pod_annotations_exclude:
+    - ^kubectl\.kubernetes\.io\/last-applied-configuration$
+    - ^ad\.datadoghq\.com\/([[:alnum:]]+\.)?(checks|check_names|init_configs|instances)$
+  kubernetes_service_name: datadog-cluster-agent
+  language_detection:
+    cleanup:
+      language_ttl: 30m
+      period: 10m
+    patcher:
+      base_backoff: 5m
+      enabled: true
+      max_backoff: 1h
+  max_leader_connections: 100
+  refresh_on_cache_miss: true
+  serve_nozzle_data: false
+  server:
+    idle_timeout_seconds: 60
+    read_timeout_seconds: 2
+    write_timeout_seconds: 2
+  service_account_name: ""
+  sidecars_tags: false
+  tagging_fallback: false
+  token_name: datadogtoken
+  url: ""
+cluster_checks:
+  advanced_dispatching_enabled: false
+  clc_runners_port: 5005
+  cluster_tag_name: cluster_name
+  enabled: false
+  exclude_checks: []
+  exclude_checks_from_dispatching: []
+  extra_tags: []
+  node_expiration_timeout: 30
+  rebalance_min_percentage_improvement: 10
+  rebalance_period: 10m0s
+  rebalance_with_utilization: false
+  support_hybrid_ignore_ad_tags: false
+  warmup_duration: 30
+cluster_name: ""
+cmd_host: localhost
+cmd_port: 5001
+collect_ec2_tags: false
+collect_ec2_tags_use_imds: false
+collect_gce_tags: true
+collect_kubernetes_events: false
+compliance_config:
+  check_interval: 20m0s
+  check_max_events_per_run: 100
+  database_benchmarks:
+    enabled: false
+  dir: /etc/datadog-agent/compliance.d
+  enabled: false
+  endpoints:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+  host_benchmarks:
+    enabled: true
+  metrics:
+    enabled: false
+  opa:
+    metrics:
+      enabled: false
+  xccdf:
+    enabled: false
+conf_path: .
+confd_path: /opt/datadog-agent/etc/conf.d
+container_cgroup_prefix: ""
+container_cgroup_root: /sys/fs/cgroup/
+container_env_as_tags: {}
+container_exclude: []
+container_exclude_logs: []
+container_exclude_metrics: []
+container_exclude_stopped_age: 22
+container_image:
+  batch_max_concurrent_send: 0
+  batch_max_content_size: 5000000
+  batch_max_size: 1000
+  batch_wait: 5
+  compression_level: 6
+  connection_reset_interval: 0
+  enabled: true
+  input_chan_size: 100
+  logs_no_ssl: false
+  sender_backoff_base: 1
+  sender_backoff_factor: 2
+  sender_backoff_max: 120
+  sender_recovery_interval: 2
+  sender_recovery_reset: false
+  use_compression: true
+  use_v2_api: true
+container_include: []
+container_include_logs: []
+container_include_metrics: []
+container_labels_as_tags: {}
+container_lifecycle:
+  batch_max_concurrent_send: 0
+  batch_max_content_size: 5000000
+  batch_max_size: 1000
+  batch_wait: 5
+  compression_level: 6
+  connection_reset_interval: 0
+  enabled: true
+  input_chan_size: 100
+  logs_no_ssl: false
+  sender_backoff_base: 1
+  sender_backoff_factor: 2
+  sender_backoff_max: 120
+  sender_recovery_interval: 2
+  sender_recovery_reset: false
+  use_compression: true
+  use_v2_api: true
+container_proc_root: /proc
+containerd_exclude_namespaces:
+- moby
+containerd_namespace: []
+containerd_namespaces: []
+cri_connection_timeout: 1
+cri_query_timeout: 5
+cri_socket_path: ""
+database_monitoring:
+  activity:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+  autodiscovery:
+    aurora:
+      discovery_interval: 300
+      enabled: false
+      query_timeout: 10
+      region: ""
+      tags:
+      - datadoghq.com/scrape:true
+  metrics:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+  samples:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+default_integration_http_timeout: 9
+disable_cluster_name_tag_key: false
+disable_file_logging: false
+disable_py3_validation: false
+disable_unsafe_yaml: true
+djm_config:
+  enabled: false
+docker_env_as_tags: {}
+docker_labels_as_tags: {}
+docker_query_timeout: 5
+dogstatsd_buffer_size: 8192
+dogstatsd_capture_depth: 0
+dogstatsd_capture_path: ""
+dogstatsd_context_expiry_seconds: 20
+dogstatsd_disable_verbose_logs: false
+dogstatsd_entity_id_precedence: false
+dogstatsd_eol_required: []
+dogstatsd_expiry_seconds: 300
+dogstatsd_log_file: ""
+dogstatsd_log_file_max_rolls: 3
+dogstatsd_log_file_max_size: 10Mb
+dogstatsd_logging_enabled: true
+dogstatsd_mapper_cache_size: 1000
+dogstatsd_mem_based_rate_limiter:
+  enabled: false
+  go_gc: 1
+  high_soft_limit: 0.8
+  low_soft_limit: 0.7
+  memory_ballast: 8589934592
+  rate_check:
+    factor: 2
+    max: 1
+    min: 0.01
+  soft_limit_freeos_check:
+    factor: 1.5
+    max: 0.1
+    min: 0.01
+dogstatsd_metrics_stats_enable: false
+dogstatsd_no_aggregation_pipeline: true
+dogstatsd_no_aggregation_pipeline_batch_size: 2048
+dogstatsd_non_local_traffic: false
+dogstatsd_origin_detection: false
+dogstatsd_origin_detection_client: false
+dogstatsd_origin_optout_enabled: true
+dogstatsd_packet_buffer_flush_timeout: 100ms
+dogstatsd_packet_buffer_size: 32
+dogstatsd_pipe_name: ""
+dogstatsd_pipeline_autoadjust: false
+dogstatsd_pipeline_autoadjust_strategy: max_throughput
+dogstatsd_pipeline_count: 1
+dogstatsd_port: 8125
+dogstatsd_queue_size: 1024
+dogstatsd_so_rcvbuf: 0
+dogstatsd_socket: ""
+dogstatsd_stats_buffer: 10
+dogstatsd_stats_enable: false
+dogstatsd_stats_port: 5000
+dogstatsd_stream_socket: ""
+dogstatsd_string_interner_size: 4096
+dogstatsd_tag_cardinality: low
+dogstatsd_tags: []
+dogstatsd_telemetry_enabled_listener_id: false
+dogstatsd_workers_count: 0
+ec2_imdsv2_transition_payload_enabled: false
+ec2_metadata_timeout: 300
+ec2_metadata_token_lifetime: 21600
+ec2_prefer_imdsv2: false
+ec2_prioritize_instance_id_as_hostname: false
+ec2_use_dmi: true
+ec2_use_windows_prefix_detection: false
+ecs_agent_container_name: ecs-agent
+ecs_agent_url: ""
+ecs_collect_resource_tags_ec2: false
+ecs_metadata_retry_initial_interval: 100ms
+ecs_metadata_retry_max_elapsed_time: 3s
+ecs_metadata_retry_timeout_factor: 3
+ecs_metadata_timeout: 500
+ecs_resource_tags_replace_colon: false
+ecs_task_cache_ttl: 3m0s
+ecs_task_collection_burst: 60
+ecs_task_collection_enabled: false
+ecs_task_collection_rate: 35
+eks_fargate: false
+enable_events_stream_payload_serialization: true
+enable_gohai: true
+enable_json_stream_shared_compressor_buffers: true
+enable_metadata_collection: true
+enable_payloads:
+  events: true
+  json_to_v1_intake: true
+  series: true
+  service_checks: true
+  sketches: true
+enable_service_checks_stream_payload_serialization: true
+enable_signing_metadata_collection: true
+enable_sketch_stream_payload_serialization: true
+enable_stream_payload_serialization: true
+enabled_rfc1123_compliant_cluster_name_tag: true
+enhanced_metrics: true
+exclude_ec2_tags: []
+exclude_gce_tags:
+- kube-env
+- kubelet-config
+- containerd-configure-sh
+- startup-script
+- shutdown-script
+- configure-sh
+- sshKeys
+- ssh-keys
+- user-data
+- cli-cert
+- ipsec-cert
+- ssl-cert
+- google-container-manifest
+- bosh_settings
+- windows-startup-script-ps1
+- common-psm1
+- k8s-node-setup-psm1
+- serial-port-logging-enable
+- enable-oslogin
+- disable-address-manager
+- disable-legacy-endpoints
+- windows-keys
+- kubeconfig
+- gce-container-declaration
+exclude_pause_container: true
+expected_tags_duration: 0s
+expvar_port: "5000"
+external_metrics:
+  aggregator: avg
+external_metrics_provider:
+  api_key: ""
+  app_key: ""
+  batch_window: 10
+  bucket_size: 300
+  chunk_size: 35
+  config: {}
+  enable_datadogmetric_autogen: true
+  enabled: false
+  endpoint: ""
+  local_copy_refresh_rate: 30
+  max_age: 120
+  max_time_window: 86400
+  port: 8443
+  query_validity_period: 30
+  refresh_period: 30
+  rollup: 30
+  split_batches_with_backoff: false
+  use_datadogmetric_crd: false
+  wpa_controller: false
+extra_config_providers: []
+extra_listeners: []
+extra_tags: []
+fips:
+  enabled: false
+  https: true
+  local_address: localhost
+  port_range_start: 9803
+  tls_verify: true
+flare_provider_timeout: 10s
+flare_stripped_keys: []
+fleet_layers: []
+forwarder_apikey_validation_interval: 60
+forwarder_backoff_base: 2
+forwarder_backoff_factor: 2
+forwarder_backoff_max: 64
+forwarder_connection_reset_interval: 0
+forwarder_flush_to_disk_mem_ratio: 0.5
+forwarder_high_prio_buffer_size: 100
+forwarder_low_prio_buffer_size: 100
+forwarder_num_workers: 1
+forwarder_outdated_file_in_days: 10
+forwarder_recovery_interval: 2
+forwarder_recovery_reset: false
+forwarder_requeue_buffer_size: 100
+forwarder_retry_queue_capacity_time_interval_sec: 900
+forwarder_stop_timeout: 2
+forwarder_storage_max_disk_ratio: 0.8
+forwarder_storage_max_size_in_bytes: 0
+forwarder_storage_path: ""
+forwarder_timeout: 20
+gce_metadata_timeout: 1000
+gce_send_project_id_tag: false
+go_core_dump: false
+gui_host: localhost
+gui_port: 5002
+gui_session_expiration: 0
+health_port: 0
+heroku_dyno: false
+histogram_aggregates:
+- max
+- median
+- avg
+- count
+histogram_copy_to_distribution: false
+histogram_copy_to_distribution_prefix: ""
+histogram_percentiles:
+- "0.95"
+host_aliases: []
+hostname: ""
+hostname_file: ""
+hostname_force_config_as_canonical: false
+hostname_fqdn: false
+hostname_trust_uts_namespace: false
+hpa_configmap_name: datadog-custom-metrics
+hpa_watcher_gc_period: 300
+hpa_watcher_polling_freq: 10
+ibm_metadata_timeout: 5
+ignore_autoconf: []
+ignore_host_etc: false
+installer:
+  registry:
+    auth: ""
+    password: "********"
+    url: ""
+    username: ""
+integration_check_status_enabled: false
+integration_profiling: false
+integration_tracing: false
+integration_tracing_exhaustive: false
+internal_profiling:
+  block_profile_rate: 0
+  capture_all_allocations: false
+  cpu_duration: 1m0s
+  custom_attributes:
+  - check_id
+  delta_profiles: true
+  enable_block_profiling: false
+  enable_goroutine_stacktraces: false
+  enable_mutex_profiling: false
+  enabled: false
+  extra_tags: []
+  mutex_profile_fraction: 0
+  period: 5m0s
+  unix_socket: ""
+inventories_checks_configuration_enabled: true
+inventories_collect_cloud_provider_account_id: true
+inventories_configuration_enabled: true
+inventories_enabled: true
+inventories_first_run_delay: 60
+inventories_max_interval: 0
+inventories_min_interval: 0
+iot_host: false
+jmx_check_period: 15000
+jmx_collection_timeout: 60
+jmx_custom_jars: []
+jmx_log_file: ""
+jmx_max_ram_percentage: 25
+jmx_max_restarts: 3
+jmx_reconnection_thread_pool_size: 3
+jmx_reconnection_timeout: 60
+jmx_restart_interval: 5
+jmx_statsd_client_buffer_size: 0
+jmx_statsd_client_queue_size: 4096
+jmx_statsd_client_socket_timeout: 0
+jmx_statsd_client_use_non_blocking: false
+jmx_statsd_telemetry_enabled: false
+jmx_telemetry_enabled: false
+jmx_thread_pool_size: 3
+jmx_use_cgroup_memory_limit: false
+jmx_use_container_support: false
+kube_cache_sync_timeout_seconds: 5
+kube_resources_namespace: ""
+kubelet_auth_token_path: ""
+kubelet_cache_pods_duration: 5
+kubelet_client_ca: ""
+kubelet_client_crt: ""
+kubelet_client_key: ""
+kubelet_core_check_enabled: true
+kubelet_listener_polling_interval: 5
+kubelet_tls_verify: true
+kubelet_wait_on_missing_container: 0
+kubernetes_ad_tags_disabled: []
+kubernetes_apiserver_ca_path: ""
+kubernetes_apiserver_client_timeout: 10
+kubernetes_apiserver_informer_client_timeout: 0
+kubernetes_apiserver_tls_verify: true
+kubernetes_apiserver_use_protobuf: false
+kubernetes_collect_metadata_tags: true
+kubernetes_event_collection_timeout: 100
+kubernetes_events_source_detection:
+  enabled: false
+kubernetes_http_kubelet_port: 10255
+kubernetes_https_kubelet_port: 10250
+kubernetes_informers_resync_period: 300
+kubernetes_kubeconfig_path: ""
+kubernetes_kubelet_host: ""
+kubernetes_kubelet_nodename: ""
+kubernetes_map_services_on_ip: false
+kubernetes_metadata_tag_update_freq: 60
+kubernetes_namespace_annotations_as_tags: {}
+kubernetes_namespace_labels_as_tags: {}
+kubernetes_node_annotations_as_host_aliases:
+- cluster.k8s.io/machine
+kubernetes_node_annotations_as_tags:
+  cluster.k8s.io/machine: kube_machine
+kubernetes_node_label_as_cluster_name: ""
+kubernetes_node_labels_as_tags: {}
+kubernetes_persistent_volume_claims_as_tags: true
+kubernetes_pod_annotations_as_tags: {}
+kubernetes_pod_expiration_duration: 900
+kubernetes_pod_labels_as_tags: {}
+kubernetes_resources_annotations_as_tags: '{}'
+kubernetes_resources_labels_as_tags: '{}'
+language_detection:
+  enabled: false
+  reporting:
+    buffer_period: 10s
+    enabled: true
+    refresh_period: 20m
+leader_election: false
+leader_election_default_resource: configmap
+leader_election_release_on_shutdown: true
+leader_lease_duration: "60"
+leader_lease_name: datadog-leader-election
+log_all_goroutines_when_unhealthy: false
+log_enabled: false
+log_file: ""
+log_file_max_rolls: 1
+log_file_max_size: 10Mb
+log_format_json: false
+log_format_rfc3339: false
+log_level: info
+log_payloads: false
+log_to_console: false
+log_to_syslog: false
+logging_frequency: 500
+logs_config:
+  aggregation_timeout: 1000
+  auditor_ttl: 23
+  auto_multi_line:
+    enable_datetime_detection: true
+    enable_json_detection: true
+    pattern_table_match_threshold: 0.75
+    pattern_table_max_size: 20
+    timestamp_detector_match_threshold: 0.5
+    tokenizer_max_input_bytes: 60
+  auto_multi_line_default_match_threshold: 0.48
+  auto_multi_line_default_match_timeout: 30
+  auto_multi_line_default_sample_size: 500
+  auto_multi_line_detection: false
+  auto_multi_line_extra_patterns: []
+  batch_max_concurrent_send: 0
+  batch_max_content_size: 5000000
+  batch_max_size: 1000
+  batch_wait: 5
+  close_timeout: 60
+  compression_level: 6
+  connection_reset_interval: 0
+  container_collect_all: false
+  dd_port: 10516
+  dd_url_443: agent-443-intake.logs.datadoghq.com
+  dev_mode_use_proto: true
+  docker_client_read_timeout: 30
+  docker_container_force_use_file: false
+  docker_container_use_file: true
+  docker_path_override: ""
+  expected_tags_duration: 0s
+  experimental_auto_multi_line_detection: false
+  file_scan_period: 10
+  file_wildcard_selection_mode: by_name
+  force_use_http: false
+  force_use_tcp: false
+  frame_size: 9000
+  input_chan_size: 100
+  integrations_logs_disk_ratio: 0.8
+  integrations_logs_files_max_size: 10
+  integrations_logs_total_usage: 100
+  k8s_container_use_file: false
+  logs_no_ssl: false
+  max_message_size_bytes: 256000
+  open_files_limit: 200
+  run_path: /opt/datadog-agent/run
+  sds:
+    buffer_max_size: 0
+    wait_for_configuration: ""
+  sender_backoff_base: 1
+  sender_backoff_factor: 2
+  sender_backoff_max: 120
+  sender_recovery_interval: 2
+  sender_recovery_reset: false
+  socks5_proxy_address: ""
+  stop_grace_period: 30
+  tag_multi_line_logs: false
+  tag_truncated_logs: false
+  tagger_warmup_duration: 0
+  use_compression: true
+  use_http: false
+  use_podman_logs: false
+  use_port_443: false
+  use_sourcehost_tag: true
+  use_tcp: false
+  use_v2_api: true
+  validate_pod_container_id: true
+  windows_open_file_timeout: 5
+logs_enabled: false
+memtrack_enabled: true
+metadata_endpoints_max_hostname_size: 255
+metadata_provider_stop_timeout: 30s
+metrics_port: "5000"
+min_tls_version: tlsv1.2
+multi_region_failover:
+  enabled: false
+  failover_logs: false
+  failover_metrics: false
+  remote_configuration:
+    clients:
+      cache_bypass_limit: "********"
+      ttl_seconds: 30s
+    max_backoff_interval: 5m0s
+network_devices:
+  metadata:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+  namespace: default
+  netflow:
+    enabled: "false"
+    forwarder:
+      batch_max_concurrent_send: 0
+      batch_max_content_size: 5000000
+      batch_max_size: 1000
+      batch_wait: 5
+      compression_level: 6
+      connection_reset_interval: 0
+      input_chan_size: 100
+      logs_no_ssl: false
+      sender_backoff_base: 1
+      sender_backoff_factor: 2
+      sender_backoff_max: 120
+      sender_recovery_interval: 2
+      sender_recovery_reset: false
+      use_compression: true
+      use_v2_api: true
+    reverse_dns_enrichment_enabled: false
+  snmp_traps:
+    bind_host: 0.0.0.0
+    community_strings: "********"
+    enabled: false
+    forwarder:
+      batch_max_concurrent_send: 0
+      batch_max_content_size: 5000000
+      batch_max_size: 1000
+      batch_wait: 5
+      compression_level: 6
+      connection_reset_interval: 0
+      input_chan_size: 100
+      logs_no_ssl: false
+      sender_backoff_base: 1
+      sender_backoff_factor: 2
+      sender_backoff_max: 120
+      sender_recovery_interval: 2
+      sender_recovery_reset: false
+      use_compression: true
+      use_v2_api: true
+    port: 9162
+    stop_timeout: 5
+network_path:
+  collector:
+    flush_interval: 10s
+    input_chan_size: 100000
+    max_ttl: 30
+    pathtest_contexts_limit: 100000
+    pathtest_interval: 5m
+    pathtest_ttl: 15m
+    processing_chan_size: 100000
+    reverse_dns_enrichment:
+      enabled: true
+      timeout: 5000
+    timeout: 1000
+    workers: 4
+  connections_monitoring:
+    enabled: false
+  forwarder:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+observability_pipelines_worker:
+  logs:
+    enabled: false
+    url: ""
+  metrics:
+    enabled: false
+    url: ""
+  traces:
+    enabled: false
+    url: ""
+orchestrator_explorer:
+  collector_discovery:
+    enabled: true
+  container_scrubbing:
+    enabled: true
+  custom_sensitive_annotations_labels: []
+  custom_sensitive_words: []
+  enabled: true
+  extra_tags: []
+  manifest_collection:
+    buffer_flush_interval: 20s
+    buffer_manifest: true
+    enabled: true
+origin_detection_unified: false
+otelcollector:
+  converter:
+    enabled: true
+  enabled: false
+  extension_timeout: 0
+  extension_url: https://localhost:7777
+  submit_dummy_metadata: false
+otlp_config:
+  logs:
+    enabled: false
+  metrics:
+    enabled: true
+    tag_cardinality: low
+  traces:
+    enabled: true
+    internal_port: 5003
+    probabilistic_sampler:
+      sampling_percentage: 100
+    span_name_remappings: {}
+podman_db_path: ""
+proc_root: /proc
+process_config:
+  additional_endpoints: {}
+  cache_lookupid: false
+  cmd_port: 6162
+  container_collection:
+    enabled: true
+  dd_agent_bin: /opt/datadog-agent/bin/agent/agent
+  disable_realtime_checks: false
+  drop_check_payloads: []
+  event_collection:
+    enabled: false
+    interval: 10s
+    store:
+      max_items: 200
+      max_pending_pulls: 10
+      max_pending_pushes: 10
+      stats_interval: 20
+  events_additional_endpoints: {}
+  expvar_port: 6062
+  grpc_connection_timeout_secs: 60
+  ignore_zombie_processes: false
+  internal_profiling:
+    enabled: false
+  language_detection:
+    grpc_port: 6262
+  log_file: /opt/datadog-agent/logs/process-agent.log
+  max_message_bytes: 1000000
+  max_per_message: 100
+  process_collection:
+    enabled: false
+  process_discovery:
+    enabled: true
+    hint_frequency: 60
+    interval: 4h0m0s
+  process_queue_bytes: 60000000
+  queue_size: 256
+  remote_tagger: false
+  remote_workloadmeta: false
+  rt_queue_size: 5
+  run_in_core_agent:
+    enabled: false
+  windows:
+    use_perf_counters: false
+prometheus_scrape:
+  enabled: false
+  service_endpoints: false
+  version: 1
+proxy:
+  http: ""
+  https: ""
+  no_proxy:
+  - 169.254.169.254
+  - 100.100.100.200
+python_version: "3"
+python3_linter_timeout: 120
+remote_configuration:
+  agent_integrations:
+    allow_list: []
+    allow_log_config_scheduling: false
+    block_list: []
+    enabled: false
+  apm_sampling:
+    enabled: true
+  clients:
+    cache_bypass_limit: "********"
+    ttl_seconds: 30s
+  config_root: ""
+  director_root: ""
+  enabled: true
+  key: ""
+  max_backoff_interval: 5m0s
+  no_tls: false
+  no_tls_validation: false
+remote_policies: false
+remote_tagger_timeout_seconds: 30
+remote_updates: false
+reverse_dns_enrichment:
+  cache:
+    clean_interval: 0s
+    enabled: true
+    entry_ttl: 0s
+    max_retries: -1
+    persist_interval: 0s
+  rate_limiter:
+    enabled: true
+    recovery_interval: 0s
+run_path: /opt/datadog-agent/run
+runtime_security_config:
+  activity_dump:
+    remote_storage:
+      endpoints:
+        batch_max_concurrent_send: 0
+        batch_max_content_size: 5000000
+        batch_max_size: 1000
+        batch_wait: 5
+        compression_level: 6
+        connection_reset_interval: 0
+        input_chan_size: 100
+        logs_no_ssl: false
+        sender_backoff_base: 1
+        sender_backoff_factor: 2
+        sender_backoff_max: 120
+        sender_recovery_interval: 2
+        sender_recovery_reset: false
+        use_compression: true
+        use_v2_api: true
+  enabled: false
+  endpoints:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+  log_profiled_workloads: false
+  socket: /opt/datadog-agent/run/runtime-security.sock
+  use_secruntime_track: true
+sbom:
+  batch_max_concurrent_send: 0
+  batch_max_content_size: 5000000
+  batch_max_size: 1000
+  batch_wait: 5
+  cache:
+    clean_interval: 1h
+    max_disk_size: 100000000
+  cache_directory: /opt/datadog-agent/run/sbom-agent
+  clear_cache_on_exit: false
+  compression_level: 6
+  connection_reset_interval: 0
+  container_image:
+    analyzers:
+    - os
+    check_disk_usage: true
+    enabled: false
+    min_available_disk: 1Gb
+    overlayfs_direct_scan: false
+    scan_interval: 0
+    scan_timeout: 600
+    use_mount: false
+  enabled: false
+  host:
+    analyzers:
+    - os
+    enabled: false
+  input_chan_size: 100
+  logs_no_ssl: false
+  scan_queue:
+    base_backoff: 5m
+    max_backoff: 1h
+  sender_backoff_base: 1
+  sender_backoff_factor: 2
+  sender_backoff_max: 120
+  sender_recovery_interval: 2
+  sender_recovery_reset: false
+  use_compression: true
+  use_v2_api: true
+scrubber:
+  additional_keys: []
+secret_audit_file_max_size: 0
+secret_backend_arguments: []
+secret_backend_command: ""
+secret_backend_command_allow_group_exec_perm: false
+secret_backend_output_max_size: 0
+secret_backend_remove_trailing_line_break: false
+secret_backend_skip_checks: false
+secret_backend_timeout: 0
+secret_refresh_interval: 0
+security_agent:
+  cmd_port: 5010
+  expvar_port: 5011
+  internal_profiling:
+    api_key: ""
+    block_profile_rate: 0
+    cpu_duration: 1m0s
+    delta_profiles: true
+    enable_block_profiling: false
+    enable_goroutine_stacktraces: false
+    enable_mutex_profiling: false
+    enabled: false
+    env: ""
+    extra_tags: []
+    mutex_profile_fraction: 0
+    period: 5m0s
+    profile_dd_url: ""
+    site: datadoghq.com
+    unix_socket: ""
+  log_file: /opt/datadog-agent/logs/security-agent.log
+  remote_tagger: true
+  remote_workloadmeta: true
+serializer_compressor_kind: zlib
+serializer_max_payload_size: 2621440
+serializer_max_series_payload_size: 512000
+serializer_max_series_points_per_payload: 10000
+serializer_max_series_uncompressed_payload_size: 5242880
+serializer_max_uncompressed_payload_size: 4194304
+serializer_zstd_compressor_level: 1
+server_timeout: 30
+serverless:
+  enabled: false
+  logs_enabled: true
+  trace_enabled: true
+  trace_managed_services: true
+service_discovery:
+  forwarder:
+    batch_max_concurrent_send: 0
+    batch_max_content_size: 5000000
+    batch_max_size: 1000
+    batch_wait: 5
+    compression_level: 6
+    connection_reset_interval: 0
+    input_chan_size: 100
+    logs_no_ssl: false
+    sender_backoff_base: 1
+    sender_backoff_factor: 2
+    sender_backoff_max: 120
+    sender_recovery_interval: 2
+    sender_recovery_reset: false
+    use_compression: true
+    use_v2_api: true
+site: datadoghq.eu
+skip_ssl_validation: false
+sslkeylogfile: ""
+statsd_forward_host: ""
+statsd_forward_port: 0
+statsd_metric_blocklist: []
+statsd_metric_blocklist_match_prefix: false
+statsd_metric_namespace: ""
+statsd_metric_namespace_blacklist:
+- datadog.agent
+- datadog.dogstatsd
+- datadog.process
+- datadog.trace_agent
+- datadog.tracer
+- activemq
+- activemq_58
+- airflow
+- cassandra
+- confluent
+- hazelcast
+- hive
+- ignite
+- jboss
+- jvm
+- kafka
+- presto
+- sidekiq
+- solr
+- tomcat
+- runtime
+syslog_key: ""
+syslog_pem: ""
+syslog_rfc: false
+syslog_tls_verify: true
+syslog_uri: ""
+system_tray:
+  log_file: ""
+tag_value_split_separator: {}
+tags: []
+telemetry:
+  dogstatsd:
+    aggregator_channel_latency_buckets: []
+    listeners_channel_latency_buckets: []
+    listeners_latency_buckets: []
+  dogstatsd_origin: false
+  enabled: false
+  python_memory: true
+tracemalloc_blacklist: ""
+tracemalloc_debug: false
+tracemalloc_exclude: ""
+tracemalloc_include: ""
+tracemalloc_whitelist: ""
+use_dogstatsd: true
+use_improved_cgroup_parser: false
+use_proxy_for_cloud_metadata: false
+use_v2_api:
+  series: true
+vector:
+  logs:
+    enabled: false
+    url: ""
+  metrics:
+    enabled: false
+    url: ""
+  traces:
+    enabled: false
+    url: ""
+win_skip_com_init: false
+windows_counter_init_failure_limit: 20
+windows_counter_refresh_interval: 60
+windows_use_pythonpath: false
+workloadmeta:
+  local_process_collector:
+    collection_interval: 1m0s
+  remote:
+    recv_without_timeout: true
