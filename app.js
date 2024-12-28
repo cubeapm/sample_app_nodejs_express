@@ -91,11 +91,6 @@ app.use((req, res, next) => {
           : null,
       },
     };
-
-    // logWithPrefix(
-    //   "SPAN",
-    //   `📊 Active Span Details:\n${JSON.stringify(spanData, null, 2)}`
-    // );
   }
   next();
 });

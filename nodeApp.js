@@ -7,52 +7,6 @@ const PORT = 8000;
 app.use(express.json());
 app.use(express.raw({ type: "application/msgpack" }));
 
-// Function to filter Express application spans
-function isExpressSpan(span) {
-  return (
-    // Include only express-related spans
-    span.name?.startsWith("express.") ||
-    // Include the main web request span
-    (span.type === "web" && span.name === "express.request")
-  );
-}
-
-// Format the span data to show all fields
-function formatSpan(span) {
-  // Return all fields from the span
-  return {
-    // Core span fields
-    name: span.name,
-    resource: span.resource,
-    service: span.service,
-    type: span.type,
-    start: span.start,
-    duration: `${(span.duration / 1000000).toFixed(2)}ms`,
-
-    // Span identifiers
-    trace_id: span.trace_id,
-    span_id: span.span_id,
-    parent_id: span.parent_id || "none",
-
-    // Error information
-    error: span.error,
-
-    // Metadata and tags
-    meta: span.meta || {},
-    metrics: span.metrics || {},
-
-    // Additional fields if they exist
-    ...(span.sampling_priority && {
-      sampling_priority: span.sampling_priority,
-    }),
-    ...(span.origin && { origin: span.origin }),
-    ...(span.links && { links: span.links }),
-
-    // Raw span for debugging (uncomment if needed)
-    _raw: span,
-  };
-}
-
 // Handle trace data
 app.all("/v0.4/traces", (req, res) => {
   try {
