@@ -12,6 +12,7 @@ ADD package-lock.json .
 RUN npm install
 
 ADD . .
+RUN mkdir -p logs
 
 EXPOSE 8000
 
