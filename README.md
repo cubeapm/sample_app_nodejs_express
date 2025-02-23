@@ -39,7 +39,7 @@ The app can be run with the following command
 
 ```
 OTEL_LOG_LEVEL=debug \
-OTEL_SERVICE_NAME=cube_sample_nodejs_express \
+OTEL_SERVICE_NAME=cube_sample_nodejs_express_otel \
 NODE_OPTIONS="--require ./tracing.js" \
 node app.js
 ```
