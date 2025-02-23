@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const mysql = require("mysql2");
 const redis = require("redis");
+const newrelic = require('newrelic');
 
 const mysqlClient = mysql.createConnection({
   host: "mysql",
@@ -27,6 +28,9 @@ redisClient.connect().catch((err) => {
     console.log("redis connected!");
   }
 });
+
+newrelic.instrumentLoadedModule('express', express);
+
 
 const PORT = parseInt(process.env.PORT || "8000");
 const app = express();

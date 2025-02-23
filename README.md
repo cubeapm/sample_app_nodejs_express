@@ -1,3 +1,15 @@
+# New Relic Instrumentation
+
+This branch contains code for New Relic instrumentation.
+
+CubeAPM works with New Relic agents as described in [using CubeAPM with New Relic agents](https://docs.cubeapm.com/instrumentation#using-cubeapm-with-new-relic-agents).
+
+For testing, **ngrok** can be used in place of load balancer. Run `ngrok http 3130` to create a tunnel and use the domain name provided by ngrok to set `NEW_RELIC_HOST=xxxx.ngrok-free.app` in [docker-compose.yml](docker-compose.yml).
+
+Refer the project README below for more details.
+
+---
+
 # NodeJS ExpressJS Instrumentation
 
 This is a sample app to demonstrate how to instrument NodeJS ExpressJS app with **New Relic** and **OpenTelemetry**. It contains source code for the ExpressJS app which interacts with various services like Redis, MySQL, etc. to demonstrate tracing for these services. This repository has a docker compose file to set up all these services conveniently.
@@ -28,6 +40,9 @@ The app has various API endpoints to demonstrate integrations with Redis, MySQL,
 The app can be run with the following command
 
 ```
+export NEW_RELIC_HOST=<domain_of_cubeapm_server>
+export NEW_RELIC_APP_NAME=cube_sample_nodejs_express_newrelic
+export NEW_RELIC_LICENSE_KEY=ABC4567890ABC4567890ABC4567890ABC4567890
 node app.js
 ```
 
