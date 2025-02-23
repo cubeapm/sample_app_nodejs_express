@@ -1,3 +1,13 @@
+# OpenTelemetry Instrumentation
+
+This branch contains code for OpenTelemetry instrumentation.
+
+Hitting an API endpoint will generate the corresponding traces. Traces are printed to console (where docker compose is running) by default. If you want to send traces to a backend tool, comment out the `OTEL_LOG_LEVEL` line and uncomment the `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` line in [docker-compose.yml](docker-compose.yml).
+
+Refer the project README below for more details.
+
+---
+
 # NodeJS ExpressJS Instrumentation
 
 This is a sample app to demonstrate how to instrument NodeJS ExpressJS app with **New Relic** and **OpenTelemetry**. It contains source code for the ExpressJS app which interacts with various services like Redis, MySQL, etc. to demonstrate tracing for these services. This repository has a docker compose file to set up all these services conveniently.
@@ -28,6 +38,9 @@ The app has various API endpoints to demonstrate integrations with Redis, MySQL,
 The app can be run with the following command
 
 ```
+OTEL_LOG_LEVEL=debug \
+OTEL_SERVICE_NAME=cube_sample_nodejs_express \
+NODE_OPTIONS="--require ./tracing.js" \
 node app.js
 ```
 
