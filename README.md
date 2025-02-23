@@ -1,8 +1,14 @@
-# NodeJS ExpressJS OpenTelemetry Instrumentation
+# NodeJS ExpressJS Instrumentation
 
-This is a sample app to demonstrate how to instrument NodeJS ExpressJS app with OpenTelemetry. It contains source code for the ExpressJS app which interacts with various services like Redis, MySQL, etc. to demonstrate tracing for these services. This repository has a docker compose file to set up all these services conveniently.
+This is a sample app to demonstrate how to instrument NodeJS ExpressJS app with **New Relic** and **OpenTelemetry**. It contains source code for the ExpressJS app which interacts with various services like Redis, MySQL, etc. to demonstrate tracing for these services. This repository has a docker compose file to set up all these services conveniently.
 
-This repository is inentionally designed to work with any OpenTelemetry backend, not just CubeAPM. In fact, it can even work without any OpenTelemetry backend (by dumping traces to console, which is also the default behaviour).
+The code is organized into multiple branches. The main branch has the Django app without any instrumentation. Other branches then build upon the main branch to add specific instrumentations as below:
+
+| Branch                                                                                         | Instrumentation | Code changes for instrumentation                                                                                |
+| ---------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------- |
+| [main](https://github.com/cubeapm/sample_app_nodejs_express/tree/main)         | None            | -                                                                                                               |
+| [newrelic](https://github.com/cubeapm/sample_app_nodejs_express/tree/newrelic) | New Relic       | [main...newrelic](https://github.com/cubeapm/sample_app_nodejs_express/compare/main...newrelic) |
+| [otel](https://github.com/cubeapm/sample_app_nodejs_express/tree/otel)         | OpenTelemetry   | [main...otel](https://github.com/cubeapm/sample_app_nodejs_express/compare/main...otel)         |
 
 ## Setup
 
@@ -15,19 +21,16 @@ docker compose up --build
 
 ExpressJS app will now be available at `http://localhost:8000`.
 
-The app has various API endpoints to demonstrate OpenTelemetry integrations with Redis, MySQL, etc. Check out [app.js](app.js) for the list of API endpoints. Hitting an API endpoint will generate the corresponding traces. Traces are printed to console (where docker compose is running) by default. If you want to send traces to a backend tool, comment out the `OTEL_LOG_LEVEL` line and uncomment the `OTEL_EXPORTER_OTLP_TRACES_ENDPOINT` line in [docker-compose.yml](docker-compose.yml).
+The app has various API endpoints to demonstrate integrations with Redis, MySQL, etc. Check out [app.js](app.js) for the list of API endpoints.
 
 ## Running without Docker
 
 The app can be run with the following command
 
 ```
-OTEL_LOG_LEVEL=debug \
-OTEL_SERVICE_NAME=cube_sample_nodejs_express \
-NODE_OPTIONS="--require ./tracing.js" \
 node app.js
 ```
 
-## Contributing
+# Contributing
 
 Please feel free to raise PR for any enhancements - additional service integrations, library version updates, documentation updates, etc.

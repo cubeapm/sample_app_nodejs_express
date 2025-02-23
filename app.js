@@ -3,8 +3,6 @@ const axios = require("axios");
 const mysql = require("mysql2");
 const redis = require("redis");
 
-const { trace } = require("@opentelemetry/api");
-
 const mysqlClient = mysql.createConnection({
   host: "mysql",
   user: "root",
@@ -63,11 +61,6 @@ app.get("/redis", (req, res) => {
 });
 
 const errorHandler = (err, req, res, next) => {
-  const span = trace.getActiveSpan();
-  if (span) {
-    span.recordException(err);
-  }
-
   // pass the error to the next middleware
   // you can do any custom error handling here
   next(err);
