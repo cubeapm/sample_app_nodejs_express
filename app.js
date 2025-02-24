@@ -28,7 +28,6 @@ redisClient.connect().catch((err) => {
   }
 });
 
-
 const PORT = parseInt(process.env.PORT || "8000");
 const app = express();
 
