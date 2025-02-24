@@ -41,6 +41,7 @@ The app can be run with the following command
 
 ```
 export NEW_RELIC_HOST=<domain_of_cubeapm_server>
+export NODE_OPTIONS="--require newrelic"
 export NEW_RELIC_APP_NAME=cube_sample_nodejs_express_newrelic
 export NEW_RELIC_LICENSE_KEY=ABC4567890ABC4567890ABC4567890ABC4567890
 node app.js
