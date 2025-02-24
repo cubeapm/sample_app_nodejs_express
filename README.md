@@ -2,7 +2,7 @@
 
 This is a sample app to demonstrate how to instrument NodeJS ExpressJS app with **New Relic** and **OpenTelemetry**. It contains source code for the ExpressJS app which interacts with various services like Redis, MySQL, etc. to demonstrate tracing for these services. This repository has a docker compose file to set up all these services conveniently.
 
-The code is organized into multiple branches. The main branch has the Django app without any instrumentation. Other branches then build upon the main branch to add specific instrumentations as below:
+The code is organized into multiple branches. The main branch has the ExpressJS app without any instrumentation. Other branches then build upon the main branch to add specific instrumentations as below:
 
 | Branch                                                                                         | Instrumentation | Code changes for instrumentation                                                                                |
 | ---------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------- |
