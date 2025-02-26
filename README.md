@@ -16,9 +16,9 @@ This is a sample app to demonstrate how to instrument NodeJS ExpressJS app with 
 
 The code is organized into multiple branches. The main branch has the ExpressJS app without any instrumentation. Other branches then build upon the main branch to add specific instrumentations as below:
 
-| Branch                                                                                         | Instrumentation | Code changes for instrumentation                                                                                |
-| ---------------------------------------------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------- |
-| [main](https://github.com/cubeapm/sample_app_nodejs_express/tree/main)         | None            | -                                                                                                               |
+| Branch                                                                         | Instrumentation | Code changes for instrumentation                                                                |
+| ------------------------------------------------------------------------------ | --------------- | ----------------------------------------------------------------------------------------------- |
+| [main](https://github.com/cubeapm/sample_app_nodejs_express/tree/main)         | None            | -                                                                                               |
 | [newrelic](https://github.com/cubeapm/sample_app_nodejs_express/tree/newrelic) | New Relic       | [main...newrelic](https://github.com/cubeapm/sample_app_nodejs_express/compare/main...newrelic) |
 | [otel](https://github.com/cubeapm/sample_app_nodejs_express/tree/otel)         | OpenTelemetry   | [main...otel](https://github.com/cubeapm/sample_app_nodejs_express/compare/main...otel)         |
 
@@ -35,18 +35,6 @@ ExpressJS app will now be available at `http://localhost:8000`.
 
 The app has various API endpoints to demonstrate integrations with Redis, MySQL, etc. Check out [app.js](app.js) for the list of API endpoints.
 
-## Running without Docker
-
-The app can be run with the following command
-
-```
-export NEW_RELIC_HOST=<domain_of_cubeapm_server>
-export NODE_OPTIONS="--require newrelic"
-export NEW_RELIC_APP_NAME=cube_sample_nodejs_express_newrelic
-export NEW_RELIC_LICENSE_KEY=ABC4567890ABC4567890ABC4567890ABC4567890
-node app.js
-```
-
-# Contributing
+## Contributing
 
 Please feel free to raise PR for any enhancements - additional service integrations, library version updates, documentation updates, etc.
