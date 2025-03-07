@@ -8,9 +8,9 @@ services:
       # tell the app that it is running in docker compose
       - CUBE_DOCKER_COMPOSE=true
 
+      - NODE_OPTIONS=--require newrelic
       # New Relic agent will send data on https://<domain_of_cubeapm_server>:443
       - NEW_RELIC_HOST=<domain_of_cubeapm_server>
-      - NODE_OPTIONS=--require newrelic
       - NEW_RELIC_APP_NAME=cube_sample_nodejs_express_newrelic
       - NEW_RELIC_LICENSE_KEY=ABC4567890ABC4567890ABC4567890ABC4567890
 
