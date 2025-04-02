@@ -13,14 +13,60 @@ services:
       - NODE_OPTIONS=--require ./tracing.js
 
       # print traces on console
-      - OTEL_LOG_LEVEL=debug
+      # - OTEL_LOG_LEVEL=debug
       # send traces to CubeAPM
-      # - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4318/v1/traces
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+    volumes:
+      - ./:/nodejs
     ports:
       - "8000:8000"
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_started
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: cube_nodejs_express_rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "5672:5672" # AMQP protocol port
+      - "15672:15672" # Management UI port
+      - "15692:15692" # Prometheus metrics port
+    # Enable the Prometheus plugin
+    command: >
+      bash -c "rabbitmq-plugins enable rabbitmq_prometheus &&
+               rabbitmq-server"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: always
+
+  # OpenTelemetry Collector with RabbitMQ monitoring
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: cube_nodejs_express_otel_collector
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml
+      - otel_collector_data:/data
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      kafka:
+        condition: service_started
     restart: always
 
   mysql:
@@ -38,5 +84,35 @@ services:
     image: redis:alpine3.18
     container_name: cube_nodejs_express_redis
 
+  # Simplified Kafka configuration
+  kafka:
+    image: apache/kafka:3.7.0
+    container_name: cube_nodejs_express_kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093" # Expose controller port
+    environment:
+      # Single node Kafka using KRaft
+      KAFKA_PROCESS_ROLES: "broker,controller"
+      KAFKA_NODE_ID: "1"
+      KAFKA_CONTROLLER_QUORUM_VOTERS: "1@localhost:9093"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+      KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
+      KAFKA_CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"
+      # Required settings for consumer groups
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+    # healthcheck:
+    #   test: ["CMD-SHELL", "nc -z localhost 9092 || exit 1"]
+    #   interval: 5s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 60s
+
 volumes:
   cube_nodejs_express_mysql:
+  otel_collector_data:

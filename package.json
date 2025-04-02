@@ -11,8 +11,12 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.56.1",
+    "@opentelemetry/instrumentation-amqplib": "^0.47.0",
+    "@opentelemetry/instrumentation-kafkajs": "^0.8.0",
+    "amqplib": "^0.10.7",
     "axios": "^1.8.1",
     "express": "^4.21.2",
+    "kafkajs": "^2.2.4",
     "mysql2": "^3.12.0",
     "redis": "^4.7.0"
   }

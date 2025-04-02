@@ -27,6 +27,12 @@ const sdk = new opentelemetry.NodeSDK({
     "@opentelemetry/instrumentation-fs": {
       enabled: false,
     },
+    "@opentelemetry/instrumentation-amqplib": {
+      enabled: true,
+    },
+    "@opentelemetry/instrumentation-kafkajs": {
+      enabled: true,
+    },
   }),
 });
 

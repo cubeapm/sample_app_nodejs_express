@@ -1,0 +1,146 @@
+# Individual infra agents are configured in the receivers section below.
+# The list of available agents and their documentation is available at
+# https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver
+receivers:
+  # hostmetrics monitors host machines (bare metal, ec2, etc.)
+  # It collects metrics for CPU, memory, etc. on the host
+  # where the collector is running.
+  hostmetrics:
+    collection_interval: 60s
+    scrapers:
+      cpu:
+      disk:
+      filesystem:
+      memory:
+      network:
+      process:
+        mute_process_all_errors: true
+
+  # RabbitMQ Receiver - uses the Management Plugin API
+  rabbitmq:
+    endpoint: http://rabbitmq:15672
+    username: admin
+    password: admin
+    collection_interval: 10s
+    metrics:
+      rabbitmq.node.disk_free:
+        enabled: true
+      rabbitmq.node.mem_used:
+        enabled: true
+      rabbitmq.node.mem_limit:
+        enabled: true
+      # rabbitmq.node.mem_alarm:
+    #     enabled: true
+    #   rabbitmq.node.fd_used:
+    #     enabled: true
+    #   rabbitmq.node.fd_total:
+    #     enabled: true
+    #   rabbitmq.node.sockets_used:
+    #     enabled: true
+    #   rabbitmq.node.sockets_total:
+    #     enabled: true
+    #   rabbitmq.node.proc_used:
+    #     enabled: true
+    #   rabbitmq.node.proc_total:
+    #     enabled: true
+    #   rabbitmq.node.disk_free_details.rate:
+    #     enabled: true
+    #   rabbitmq.node.fd_used_details.rate:
+    #     enabled: true
+    #   rabbitmq.node.mem_used_details.rate:
+    #     enabled: true
+    #   rabbitmq.node.proc_used_details.rate:
+    #     enabled: true
+    #   rabbitmq.node.sockets_used_details.rate:
+    #     enabled: true
+    #   rabbitmq.node.uptime:
+    #     enabled: true
+    #   rabbitmq.node.run_queue:
+    #     enabled: true
+    #   rabbitmq.node.processors:
+    #     enabled: true
+
+  # Kafka Metrics Receiver
+  kafkametrics:
+    cluster_alias: "cube-kafka"
+    brokers: ["kafka:9092"]
+    protocol_version: "3.0.0"
+    collection_interval: 10s
+    scrapers:
+      - brokers
+      - topics
+      - consumers
+    topic_match: "^[^_].*$" # Excludes internal topics (starting with _)
+    client_id: "otel-collector"
+
+  # Also keep the Prometheus endpoint for queue metrics and other detailed metrics
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: "rabbitmq"
+          scrape_interval: 10s
+          static_configs:
+            - targets: ["rabbitmq:15692"]
+          metrics_path: /metrics
+          honor_labels: true
+
+processors:
+  batch:
+
+  resourcedetection:
+    detectors:
+      - system
+    system:
+      hostname_sources: ["os"]
+
+  resource:
+    attributes:
+      - key: service.name
+        value: "rabbitmq"
+        action: upsert
+      # - key: cube.environment
+      #   value: "development"
+      #   action: upsert
+
+exporters:
+  debug:
+    verbosity: detailed
+    sampling_initial: 5
+    sampling_thereafter: 200
+
+  # Send metrics to external OTLP endpoint
+  otlphttp:
+    endpoint: http://host.docker.internal:3130/api/metrics/v1/save/otlp
+    metrics_endpoint: http://host.docker.internal:3130/api/metrics/v1/save/otlp
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
+service:
+  pipelines:
+    metrics:
+      receivers:
+        - hostmetrics
+        - rabbitmq
+        - prometheus
+        - kafkametrics
+      processors:
+        - resourcedetection
+        - resource
+        - batch
+      exporters:
+        - otlphttp
+        - debug
+
+  telemetry:
+    logs:
+      level: info
+    metrics:
+      readers:
+        - pull:
+            exporter:
+              prometheus:
+                host: "localhost"
+                port: 8888
