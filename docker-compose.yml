@@ -10,7 +10,10 @@ services:
 
       - DD_SERVICE=cube_sample_nodejs_express_datadog
       # send traces to CubeAPM
-      - DD_TRACE_AGENT_URL=http://host.docker.internal:3130
+      # - DD_TRACE_AGENT_URL=http://host.docker.internal:3130
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - DD_RUNTIME_METRICS_RUNTIME_ID_ENABLED=true
+      - DD_AGENT_HOST=datadog-agent
 
       # optional settings
       # - DD_ENV=myenv
@@ -26,6 +29,7 @@ services:
     depends_on:
       - mysql
       - redis
+      - datadog-agent
     restart: always
 
   mysql:
@@ -42,6 +46,34 @@ services:
   redis:
     image: redis:alpine3.18
     container_name: cube_nodejs_express_redis
+
+  datadog-agent:
+    image: gcr.io/datadoghq/agent:latest   # or datadog/agent:latest
+    container_name: datadog-agent
+    environment:
+      # Required
+      - DD_API_KEY=<datadog API Key>                # your Datadog API key
+      # - DD_SITE=us5.datadoghq.com          # change to datadoghq.eu or datadoghq.in if needed
+      - DD_DD_URL=http://host.docker.internal:3130
+
+      # Metrics
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true      # accept DogStatsD metrics from other containers
+      - DD_DOGSTATSD_PORT=8125
+
+      # APM / Traces
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_APM_RECEIVER_PORT=8126
+      - DD_OBSERVABILITY_PIPELINES_WORKER_TRACES_URL=http://host.docker.internal:3130
+      - DD_OBSERVABILITY_PIPELINES_WORKER_TRACES_ENABLED=true
+
+    ports:
+      - "8125:8125/udp"    # DogStatsD (metrics)
+      - "8126:8126/tcp"    # APM traces
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
 
 volumes:
   cube_nodejs_express_mysql:
