@@ -12,6 +12,9 @@ services:
       - OTEL_EXPORTER_OTLP_COMPRESSION=gzip
       - NODE_OPTIONS=--require ./tracing.js
 
+      # optional settings
+      - OTEL_RESOURCE_ATTRIBUTES=cube.environment=UNSET,service.version=1.2.3,mykey1=myvalue1,mykey2=myvalue2
+
       # print traces on console
       - OTEL_LOG_LEVEL=debug
       # send traces to CubeAPM
