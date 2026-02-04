@@ -13,9 +13,9 @@ services:
       # Send data to Datadog Agent
       - DD_AGENT_HOST=datadog-agent
 
-      # Enable runtime metrics 
-      - DD_RUNTIME_METRICS_ENABLED=true 
-      - DD_RUNTIME_METRICS_RUNTIME_ID_ENABLED=true 
+      # Enable runtime metrics
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - DD_RUNTIME_METRICS_RUNTIME_ID_ENABLED=true
 
       # optional settings
       # - DD_ENV=myenv
