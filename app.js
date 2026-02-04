@@ -31,6 +31,19 @@ redisClient.connect().catch((err) => {
 const PORT = parseInt(process.env.PORT || "8000");
 const app = express();
 
+
+// Dummy middleware. Returns 401 Unauthorized for requests to '/middlewares'.
+function authMiddleware(req, res, next) {
+  if (req.path === '/middlewares') {
+    return res.status(401).json({error: "Unauthorized"});
+  }
+  // Condition passed. Continue to next middleware/route.
+  next();
+}
+
+app.use(authMiddleware);
+
+
 app.get("/", (req, res) => {
   res.send("Hello");
 });
@@ -58,6 +71,10 @@ app.get("/mysql", (req, res) => {
 app.get("/redis", (req, res) => {
   redisClient.set("foo", "bar");
   res.send("Redis called");
+});
+
+app.get("/middlewares", (req, res) => {
+  res.send("middlewares done");
 });
 
 const errorHandler = (err, req, res, next) => {
