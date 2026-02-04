@@ -41,7 +41,17 @@ function authMiddleware(req, res, next) {
   next();
 }
 
-app.use(authMiddleware);
+// When middlewares are added using app.use(), they get executed before
+// route resolution, and hence New Relic agent does not know route name
+// if response is returned from middleware itself. It then sets transaction
+// name as '/' irrespective of actual request url. Adding middlewares in
+// app.get() etc. using withMiddlewares() defined below solves this problem.
+//
+// app.use(authMiddleware);
+
+function withMiddlewares(handler) {
+  return [authMiddleware, handler];
+}
 
 
 app.get("/", (req, res) => {
@@ -73,9 +83,9 @@ app.get("/redis", (req, res) => {
   res.send("Redis called");
 });
 
-app.get("/middlewares", (req, res) => {
+app.get("/middlewares", ...withMiddlewares((req, res) => {
   res.send("middlewares done");
-});
+}));
 
 const errorHandler = (err, req, res, next) => {
   // pass the error to the next middleware
