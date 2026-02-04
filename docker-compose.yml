@@ -20,6 +20,10 @@ services:
       # send traces to CubeAPM
       # - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4318/v1/traces
 
+      # send logs to CubeAPM
+      - OTEL_EXPORTER_OTLP_LOGS_ENDPOINT=http://host.docker.internal:3130/api/logs/insert/opentelemetry/v1/logs
+      - OTEL_EXPORTER_OTLP_LOGS_HEADERS=Cube-Stream-Fields=service.name%2Cseverity
+
       # print metrics on console
       - OTEL_METRICS_EXPORTER=console
       # send metrics to CubeAPM
