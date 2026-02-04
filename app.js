@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const mysql = require("mysql2");
 const redis = require("redis");
+const winston = require("winston");
 
 const mysqlClient = mysql.createConnection({
   host: "mysql",
@@ -28,6 +29,12 @@ redisClient.connect().catch((err) => {
   }
 });
 
+const wlogger = winston.createLogger({
+  transports: [new winston.transports.Console()],
+  exceptionHandlers: [new winston.transports.Console()],
+});
+
+
 const PORT = parseInt(process.env.PORT || "8000");
 const app = express();
 
@@ -49,10 +56,12 @@ app.get("/", (req, res) => {
 });
 
 app.get("/param/:param", function (req, res) {
+  wlogger.info("param called");
   res.send("Got param " + req.params.param);
 });
 
 app.get("/exception", function (req, res) {
+  wlogger.error("exception called");
   throw new Error("Sample exception");
 });
 
